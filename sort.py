@@ -14,20 +14,12 @@ dic = {'А':'A', 'а':'a', 'Б':'B', 'б':'b', 'В':'V', 'в':'v',
        'С':'S', 'с':'s', 'Т':'T', 'т':'t', 'У':'U', 'у':'u', 'Ф':'F', 'ф':'f', 'Х':'Kh', 'х':'kh',
        'Ц':'Tc', 'ц':'tc', 'Ч':'Ch', 'ч':'ch', 'Ш':'Sh', 'ш':'sh', 'Щ':'Shch', 'щ':'shch', 'Ю':'Iu', 'ю':'iu', 'Я':'Ia', 'я':'ia', 'Ь':'', 'ь':'',}
 
-
-ext_dict = {'images': ['JPEG', 'PNG', 'JPG', 'SVG', 'GIF'],
-            'video': ['AVI', 'MP4', 'MOV', 'MKV'],
-            'documents': ['DOC', 'DOCX', 'TXT', 'PDF', 'XLSX', 'PPTX', 'XLS'],
-            'audio': ['MP3', 'OGG', 'WAV', 'AMR'],
-            'archives': ['ZIP', 'GZ', 'TAR', 'RAR']}
-
 list_ext = []
-list_unknown_ext = []
 files_list = []
 
-# path = Path(sys.argv[1])
+path = Path(sys.argv[1])
 
-path = Path('D:\Розбрати')
+# path = Path('D:\Розбрати')
 
 fix_path = path
 
@@ -136,8 +128,6 @@ if __name__ == "__main__":
         thread = Thread(target=file_processing, args=(folder,))
         thread.start()
         threads.append(thread)
-
-    # [el.join() for el in threads]
   
     for folder in path.iterdir():
         thread = Thread(target=list_files_category, args=(folder,))
@@ -147,7 +137,6 @@ if __name__ == "__main__":
     with concurrent.futures.ThreadPoolExecutor(max_workers=6) as executor:
         results = list(executor.map(list_files_category, foldername_ext))
 
-    # logging.debug(results)
     print(results)
 
     [el.join() for el in threads]
